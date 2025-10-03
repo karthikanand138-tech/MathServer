@@ -1,15 +1,16 @@
 # Ex.05 Design a Website for Server Side Processing
-## Date:
+## Date:3.10.2025
 
 ## AIM:
- To design a website to calculate the power of a lamp filament in an incandescent bulb in the server side. 
+ 
+ To design a website to calculate the Body Mass Index(BMI) in the server side.
 
 
 ## FORMULA:
-P = I<sup>2</sup>R
-<br> P --> Power (in watts)
-<br> I --> Intensity
-<br> R --> Resistance
+BMI = W/H^2 
+<br> BMI --> Body Mass Index
+<br> W --> Weight
+<br> H --> Height
 
 ## DESIGN STEPS:
 
@@ -32,13 +33,130 @@ Create a HTML file to implement form based input and output.
 Publish the website in the given URL.
 
 ## PROGRAM :
+~~~
+
+math.html
+<html>
+    <head>
+        <title>BMI Calculator</title>
+        <style>
+        body{
+          background-color: rgba(218, 167, 91, 0.745);
+          border-top: 10;
+        }
+        .m{
+          background-color: rgb(116, 14, 150);
+          border-style: inset;
+          margin-top: 150px;
+          margin-left: 500px;
+          margin-right: 500px;
+          
+        }
+        *{
+          color: rgb(122, 6, 122);
+        }
+            .main{
+                font-size: 250%;
+                text-align: center;
+                text-decoration:underline;
+
+                background-color: rgba(11, 179, 208, 0.779);
+                 margin-left: 50px;
+                  margin-right: 50px;
+                  padding: 50px;
+                  
+                  
+            }
+            .a{
+                font-size: 150%;
+                text-align: center;
+                background-color: rgba(11, 179, 208, 0.779);
+                 margin-left: 50px;
+                  margin-right: 50px;
+                
+                 
+            }
+            form{
+              text-align: center;
+              background-color: rgba(11, 179, 208, 0.779);
+               margin-left: 50px;
+             margin-right: 50px;
+             padding: 50px;
+            }
+           
+        </style>
+    </head>
+    <body>
+
+       <div class="m">
+        <div class="main" style="color: rgb(90, 34, 131);">BMI Calculator</div>
+        <div class="a">
+      <q> A KARTHIK-(25016949)</q></div>
+        <form method="post">
+          {% csrf_token %}
+           
+           
+            <label>Weight(kg)=</label>
+            <input type="text" name="weight" value="{{w}}"><br><br>
+             <label>Height(cm)=</label>
+            <input type="text" name="height" value="{{h}}"><br><br>
+            <button type="submit">Calculate</button><br><br>
+            <label>BMI=</label>
+            <input type="text" name="bmi" value="{{bmi}}">
+        </div>
+        </form>
+        
+        
+    </body>
+</html>
+
+urls.py
+from django.contrib import admin
+from django.urls import path
+from Tamilapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('bmi/',views.calculate_bmi,name="bmi"),
+    path('',views.calculate_bmi,name="bmicalculator")
+]
+
+views.py
+from django.shortcuts import render
+def calculate_bmi(request):
+    context={}
+    context['bmi']="0"
+    context['w']="0"
+    context['h']="0"
+    if(request.method=='POST'):
+       w= float(request.POST.get('weight','0'))
+       h=float(request.POST.get('height','0'))
+       print('request=',request)
+       
+       print('Weight=',w)
+       print('Height=',h)
+       bmi=w/((h/100)**2)
+       context['bmi']=bmi
+       context['w']=w
+       context['h']=h
+       print('BMI=',bmi)
+    return render(request,'mathapp/math.html',context)
+
+~~~
+
 
 
 ## SERVER SIDE PROCESSING:
 
+Screenshot (38).png
+
+
+
 
 ## HOMEPAGE:
-
+Screenshot (37).png
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
+
+
